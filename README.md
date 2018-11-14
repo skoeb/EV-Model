@@ -1,4 +1,4 @@
-# CO EV Model
+# EV Model
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/skoeb/EV-Model/master?filepath=EV%20Model.ipynb)
 
 Click the badge above to launch the model in an interactive virtual machine. This might take a minute to load. 
