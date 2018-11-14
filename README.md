@@ -1,9 +1,9 @@
 # CO EV Model
-[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/skoeb/CO-EV-Model/master?filepath=CO%20EV%20Model.ipynb)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/skoeb/EV-Model/master?filepath=EV%20Model.ipynb)
 
 Click the badge above to launch the model in an interactive virtual machine. This might take a minute to load. 
 
-Using simulated EV load data from NREL's EVI-Pro model, this tool visualizes various scenarios of EV adoption and charging to forecast the impact on overall Xcel (PSCo) system load. This paper will briefly explain the methodology and purpose of the tool. 
+Using simulated EV load data from NREL's *__[EVI-Pro](https://www.nrel.gov/docs/fy18osti/70831.pdf)__* model, this tool vizualizes various scenarios of EV adoption and charging to forecast the impact on balancing authority system load. Data from EVI-Pro is simulated from measured driving data which represents the habits and patterns of drivers to estimate the time, type, volume, and location of charging.
 
 EVI-Pro uses GPS trip data from 32.9 million trips in the Columbus, Ohio region (the majority of which are from non-EVs), complemented with public transit data from California and Massachusetts. This data is used to provide a bottom-up simulation of the habits and patterns of drivers to estimate the time, type, volume, and location of EV charging that would be needed to support a higher penetration of electric vehicles. 
 
