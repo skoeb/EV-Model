@@ -33,4 +33,4 @@ The tool then provides five customized visualizations displaying how an average 
 2. The new EV load by location of charging absent the existing system load
 3. EV load by charging behavior (no delay, max delay, min power, TOU, shiftable)
 4. EV load as a contribution to overall system load, measured as a percent
-5. PSCo system lambda ($/MWh) and an arbitrary volume of wind using modeled data from two measurement sites located close to the Rush Creek wind site. 
+5. System lambda ($/MWh)
