@@ -691,4 +691,4 @@ Time Spent Below Mean: {delta}
         self.programloadplotter()
         self.loadcontributionplotter()
         self.lambdaplotter()
-        self.var_renewable_output()
+        #self.var_renewable_output()
