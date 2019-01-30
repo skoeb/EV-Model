@@ -609,4 +609,4 @@ Time Spent Below Mean: {delta}
         self.evloadonlyplotter()
         self.programloadplotter()
         self.loadcontributionplotter()
-        #self.lambdaplotter()
+        self.lambdaplotter()
