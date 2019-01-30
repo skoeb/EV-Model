@@ -598,7 +598,88 @@ Time Spent Below Mean: {delta}
         plt.xticks(np.arange(0,25,2))
         plt.show()
 
+    ## Here I am adding a plot of a variable renewable load of our choosing
+    def var_renewable_output(self):
+        figlambda, axlambda = plt.subplots(figsize = self.figsize, dpi = self.dpi)
+        sns.set_style('white')
+        sns.despine()
+        sl = sns.lineplot('Hour','value', data = self.sldfout, ax = axlambda, label = 'Average System λ')
+        hours = range(0,24)
+        ts_mean = []
+        ts_std = []
+        for hour in hours:
+            df_local = self.sldfout.loc[self.sldfout['Hour'] == hour]
+            ts_mean.append(df_local['value'].mean())
+            ts_std.append(df_local['value'].std())
+            
+        ymax = max(ts_mean)
+        xpos = ts_mean.index(ymax)
+        ymax = round(max(ts_mean), 2)
+        stdmax = round(ts_std[xpos], 2)
+        mean = round(np.mean(ts_mean), 2)
+        
+        linex = np.asarray(hours) #these lists are used to calculate intersections with the meanx lists
+        liney = np.asarray(ts_mean)
+        meanx = linex
+        meany = np.asarray([mean] * len(meanx))
+        
+        xintersections, yintersections = intersection(linex, liney, meanx, meany)
+        xintersections = sorted(list(set([round(i,3) for i in list(xintersections)])))
+        xintersectionslist = [str(i).split('.') for i in xintersections]
+        
+        def decimaltotime(i):
+            hour = i[0]
+            dec = str(int((float(i[1]) / 100) * 60))
+            if len(dec) == 1:
+                minute = f'0{dec}'
+            elif len(dec) == 2:
+                minute = dec
+            else:
+                minute = dec[0:2]
+            return f'{hour}:{minute}'
+            
+        xintersectiontimes = [decimaltotime(i) for i in xintersectionslist]
+        
+        if len(xintersectiontimes) == 0:
+            goabovetime = 'N/A'
+            gobelowtime = 'N/A'
+            delta = 'N/A'
+        elif len(xintersectiontimes) == 1:
+            goabovetime = xintersectiontimes[0]
+            gobelowtime = 'N/A'
+            delta = decimaltotime(str(24 - xintersections[0]).split('.'))
+            vl = plt.axvline(x = xintersections[0], ls = '--', color = sns.color_palette()[8], label = 'λ Crosses Mean')
+        else:
+            goabovetime = xintersectiontimes[0]
+            gobelowtime = xintersectiontimes[-1]
+            delta = decimaltotime(str(24 - (xintersections[-1] - xintersections[0])).split('.'))
+            vl = plt.axvline(x = xintersections[0], ls = '--', color = sns.color_palette()[8], label = 'λ Crosses Mean')
+            plt.axvline(x = xintersections[-1], ls = '--', color = sns.color_palette()[8])
     
+        hl = axlambda.axhline(mean, ls = '--', color = sns.color_palette()[1], label = 'λ Mean')
+        
+        lns = [sl.lines[0], hl, vl]
+        labels = [l.get_label() for l in lns[0:3]]
+        axlambda.legend(lns, labels, loc = 'upper center', fontsize = 8)
+        axlambda.set_title('System Lambda by Hour (Confidence Band = Standard Dev.)', fontsize = self.titlesize)
+        axlambda.set_xlabel('Hour of The Day')
+        axlambda.set_ylabel('$/MWh')
+        plt.xticks(np.arange(0,24,2))
+
+        
+        s = f"""
+Peak Hour: {xpos}
+Peak Price: ${ymax}
+Peak σ: ${stdmax}
+Mean Price: ${mean}
+Lambda Went Above Mean: {goabovetime}
+Lambda Went Below Mean: {gobelowtime}
+Time Spent Below Mean: {delta}
+"""
+        axlambda.text(x = 0.7, y = 0.12, s = s, size = 7, transform=figlambda.transFigure)
+        return self
+
+    ## This is where the code is called
     def plotall(self, pct_nodelay, pct_maxdelay, pct_minpower, pct_shift, pct_tou, dayofweek, num_evs):                           
         pct_sum = pct_nodelay + pct_maxdelay + pct_minpower + pct_shift + pct_tou
         if pct_sum != 1:
@@ -610,3 +691,4 @@ Time Spent Below Mean: {delta}
         self.programloadplotter()
         self.loadcontributionplotter()
         self.lambdaplotter()
+        self.var_renewable_output()
