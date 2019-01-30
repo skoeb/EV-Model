@@ -599,7 +599,7 @@ Time Spent Below Mean: {delta}
         plt.show()
 
     ## Here I am adding a plot of a variable renewable load of our choosing
-    def var_renewable_output(self):
+    """ def var_renewable_output(self):
         figlambda, axlambda = plt.subplots(figsize = self.figsize, dpi = self.dpi)
         sns.set_style('white')
         sns.despine()
@@ -667,7 +667,7 @@ Time Spent Below Mean: {delta}
         plt.xticks(np.arange(0,24,2))
 
         
-        s = f"""
+        s = f""
 Peak Hour: {xpos}
 Peak Price: ${ymax}
 Peak σ: ${stdmax}
@@ -675,9 +675,9 @@ Mean Price: ${mean}
 Lambda Went Above Mean: {goabovetime}
 Lambda Went Below Mean: {gobelowtime}
 Time Spent Below Mean: {delta}
-"""
+""
         axlambda.text(x = 0.7, y = 0.12, s = s, size = 7, transform=figlambda.transFigure)
-        return self
+        return self """
 
     ## This is where the code is called
     def plotall(self, pct_nodelay, pct_maxdelay, pct_minpower, pct_shift, pct_tou, dayofweek, num_evs):                           
